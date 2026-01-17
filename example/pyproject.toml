@@ -1,0 +1,11 @@
+[project]
+name = "example-mcp"
+version = "0.1.0"
+description = "Example MCP server template for FastMCP Cloud"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=2.0.0,<3",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+]
