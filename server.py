@@ -13,6 +13,8 @@ from typing import Any, Dict, List, Optional
 
 import httpx
 from fastmcp import FastMCP
+from fastmcp.server.providers.skills import SkillProvider
+from pathlib import Path
 from pydantic import BaseModel, ConfigDict, Field
 
 # Constants (configurable via environment variables)
@@ -24,6 +26,9 @@ mcp = FastMCP(
     "solar-system-mcp",
     instructions="MCP server for exploring solar system data. Use these tools to search, filter, and analyze celestial bodies including planets, moons, asteroids, and comets. You can also calculate real-time positions of objects from any observer location.",
 )
+
+# Register skill provider for LLM guidance
+mcp.add_provider(SkillProvider(Path(__file__).parent / "skills" / "solar-system"))
 
 
 # Enums
@@ -629,7 +634,4 @@ async def solar_get_dwarf_planets(response_format: str = "json") -> str:
 
 
 if __name__ == "__main__":
-    # HTTP transport for fastmcp.cloud
-    host = os.getenv("MCP_HOST", "0.0.0.0")
-    port = int(os.getenv("MCP_PORT", "8000"))
-    mcp.run(transport="http", host=host, port=port)
+    mcp.run(transport="http")
